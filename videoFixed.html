@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet/less" href="videoFixed.less">
+    <script src="//cdnjs.cloudflare.com/ajax/libs/less.js/3.11.1/less.min.js" ></script>
+</head>
+<body>
+<section>
+    <div class="videoBox">
+        <i class="close-ico" onclick="closeFix()"></i>
+        <i class="open-ico" onclick="toVideo()"></i>
+        <video controls="controls" preload="auto" autoplay muted>
+            <source src="" type="video/mp4">
+            抱歉，您的浏览器不支持嵌入式视频。
+        </video>
+    </div>
+</section>
+
+
+<p>
+    Lorem ipsum dolor sit amet consectetur adipisicing elit. Illo, et. Et deserunt debitis sequi. Consectetur, saepe
+    omnis! Minus quam magni error sapiente, ipsam laboriosam expedita omnis cum ducimus, recusandae amet!
+</p>
+
+<p>
+    Lorem ipsum dolor sit amet consectetur adipisicing elit. Illo, et. Et deserunt debitis sequi. Consectetur, saepe
+    omnis! Minus quam magni error sapiente, ipsam laboriosam expedita omnis cum ducimus, recusandae amet!
+</p>
+
+<p>
+    Lorem ipsum dolor sit amet consectetur adipisicing elit. Illo, et. Et deserunt debitis sequi. Consectetur, saepe
+    omnis! Minus quam magni error sapiente, ipsam laboriosam expedita omnis cum ducimus, recusandae amet!
+</p>
+
+<p>
+    Lorem ipsum dolor sit amet consectetur adipisicing elit. Illo, et. Et deserunt debitis sequi. Consectetur, saepe
+    omnis! Minus quam magni error sapiente, ipsam laboriosam expedita omnis cum ducimus, recusandae amet!
+</p>
+
+<p>
+    Lorem ipsum dolor sit amet consectetur adipisicing elit. Illo, et. Et deserunt debitis sequi. Consectetur, saepe
+    omnis! Minus quam magni error sapiente, ipsam laboriosam expedita omnis cum ducimus, recusandae amet!
+</p>
+
+<p>
+    Lorem ipsum dolor sit amet consectetur adipisicing elit. Illo, et. Et deserunt debitis sequi. Consectetur, saepe
+    omnis! Minus quam magni error sapiente, ipsam laboriosam expedita omnis cum ducimus, recusandae amet!
+</p>
+</body>
+</html>
+
+<script>
+    var videoHeight;
+    var videoEl;
+    var videoBox;
+    var placeholderBox;
+
+    window.onload = function() {
+        videoEl = document.querySelector('video');
+        videoBox = document.querySelector('.videoBox');
+        placeholderBox = document.querySelector('section');
+
+        videoEl.addEventListener('canplay', e => {
+            videoHeight = e.target.offsetHeight;
+            placeholderBox.style.height = videoHeight  + 'px';
+        });
+
+        window.addEventListener('scroll', function () {
+            const scrollHeight = window.pageYOffset;
+
+            if (scrollHeight > videoHeight) {
+                videoBox.classList.add('fixed');
+            }
+            else {
+                videoBox.classList.remove('fixed');
+            }
+        })
+    };
+
+    function closeFix() {
+        videoBox.classList.remove('fixed');
+    }
+
+
+    function toVideo() {
+        window.scrollTo({
+            behavior: "smooth",
+            top: placeholderBox.offsetTop
+        });
+    }
+</script>
+
+<script>
+    var dragged;
+
+    /* 拖动目标元素时触发 drag 事件 */
+    /** 会一直触发 */
+    document.addEventListener("drag", function( event ) {
+
+    }, false);
+
+    /** 只触发一次 */
+    document.addEventListener("dragstart", function( event ) {
+        // 保存拖动元素的引用 (ref.)
+        dragged = event.target;
+
+        // 使其半透明
+        event.target.style.opacity = .5;
+    }, false);
+
+    /** 只触发一次 */
+    document.addEventListener("dragend", function( event ) {
+        // 重置透明度
+        event.target.style.opacity = "";
+    }, false);
+
+    /* 放置目标元素时触发事件 */
+    /** 拖到可释放元素上时，一直触发，移开停止 */
+    document.addEventListener("dragover", function( event ) {
+        // 阻止默认动作以启用 drop
+        event.preventDefault();
+    }, false);
+
+    /** 拖到可释放元素上时，触发一次 */
+    document.addEventListener("dragenter", function( event ) {
+        // 当可拖动的元素进入可放置的目标时高亮目标节点
+        if ( event.target.className == "dropzone" ) {
+            event.target.style.background = "purple";
+        }
+
+    }, false);
+
+    /** 离开可释放元素时，触发一次 */
+    document.addEventListener("dragleave", function( event ) {
+        // 当拖动元素离开可放置目标节点，重置其背景
+        if ( event.target.className == "dropzone" ) {
+            event.target.style.background = "";
+        }
+
+    }, false);
+
+    /** 在可以放置元素上松开时触发，只触发一次 */
+    document.addEventListener("drop", function( event ) {
+        // 阻止默认动作（如打开一些元素的链接）
+        event.preventDefault();
+
+        // 将拖动的元素到所选择的放置目标节点中
+        if ( event.target.className == "dropzone") {
+            event.target.style.background = "";
+            dragged.parentNode.removeChild( dragged );
+            event.target.appendChild( dragged );
+        }
+
+    }, false);
+</script>

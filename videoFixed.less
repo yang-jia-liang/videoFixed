@@ -1,0 +1,54 @@
+* {
+  margin: 0;
+  padding: 0;
+}
+
+p {
+  font-size: 24px;
+  margin-bottom: 20px;
+}
+
+.videoBox {
+  transition: all .5s;
+
+  &.fixed {
+    min-width: 200px;
+    width: 20%;
+    position: fixed;
+    top: 0;
+    left: 0;
+
+    &:hover {
+      filter: sepia(1);
+
+      :is(.close-ico, .open-ico)::after {
+        display: block;
+      }
+    }
+  }
+
+  video {
+    width: 100%;
+  }
+
+  .close-ico::after, .open-ico::after {
+    color: #fff;
+    position: absolute;
+    padding: 5px;
+    z-index: 99;
+    display: none;
+    top: 0;
+    background-color: rgba(0, 0, 0, .4);
+  }
+  .close-ico::after {
+    content: '×';
+    left: 0;
+  }
+  .open-ico::after {
+    content: '⇗';
+    right: 0;
+  }
+}
+
+
+
